@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/authSlice';
 import logo from '../pages/logo.png';
+import logo2 from '../pages/logo2.png';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard' },
@@ -30,9 +31,26 @@ export const Sidebar = () => {
         sidebarOpen ? 'w-60' : 'w-16'
       }`}
     >
-      <div className={`flex items-center px-4 ${sidebarOpen ? 'h-[68px] justify-between' : 'h-[88px] flex-col justify-center gap-2'}`}>
-        <img src={logo} alt="FinSight" className={sidebarOpen ? ' ml-0 h-12 w-auto object-contain' : 'h-7 w-7 object-contain'} />
+      {/* Logo Section */}
+      <div
+        className={`flex items-center px-4 ${
+          sidebarOpen
+            ? 'h-[68px] justify-between'
+            : 'h-[88px] flex-col justify-center gap-2'
+        }`}
+      >
+        <img
+          src={sidebarOpen ? logo : logo2}
+          alt="FinSight"
+          className={
+            sidebarOpen
+              ? 'ml-0 h-12 w-auto object-contain'
+              : 'h-10 w-10 object-contain'
+          }
+        />
+
         {sidebarOpen && <span className="flex-1" />}
+
         <button
           onClick={() => setSidebarOpen((v) => !v)}
           title={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
@@ -42,9 +60,11 @@ export const Sidebar = () => {
         </button>
       </div>
 
+      {/* Navigation */}
       <nav className="flex-1 px-3 space-y-1">
         {navItems.map((item) => {
           const isActive = location.pathname === item.to;
+
           return (
             <Link
               key={item.to}
@@ -61,6 +81,7 @@ export const Sidebar = () => {
               {isActive && (
                 <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 bg-orange-500 rounded-full" />
               )}
+
               {!sidebarOpen ? (
                 <span className="w-6 h-6 flex items-center justify-center rounded-md text-xs font-semibold flex-shrink-0">
                   {item.label.charAt(0)}
@@ -73,6 +94,7 @@ export const Sidebar = () => {
         })}
       </nav>
 
+      {/* Bottom Section */}
       <div className="px-3 pb-5 border-t border-gray-100 pt-4 mt-2">
         <Link
           to="/profile"
@@ -84,8 +106,12 @@ export const Sidebar = () => {
           <div className="w-7 h-7 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0">
             {(user?.name || 'U').charAt(0).toUpperCase()}
           </div>
-          {sidebarOpen && <span className="truncate">{user?.name || 'Profile'}</span>}
+
+          {sidebarOpen && (
+            <span className="truncate">{user?.name || 'Profile'}</span>
+          )}
         </Link>
+
         <button
           onClick={handleLogout}
           title={!sidebarOpen ? 'Log out' : undefined}
@@ -94,7 +120,9 @@ export const Sidebar = () => {
           }`}
         >
           {!sidebarOpen ? (
-            <span className="w-6 h-6 flex items-center justify-center rounded-md text-xs font-semibold flex-shrink-0">⏻</span>
+            <span className="w-6 h-6 flex items-center justify-center rounded-md text-xs font-semibold flex-shrink-0">
+              ⏻
+            </span>
           ) : (
             <span className="whitespace-nowrap">Log out</span>
           )}
