@@ -21,15 +21,11 @@ const app = express();
 app.use(helmet());
 
 // CORS configuration
-const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'https://fin-sight-gray.vercel.app'
-  ],
-  credentials: true
-};
 
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
 
 // Body parser
 app.use(express.json({ limit: '10mb' }));
