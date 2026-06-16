@@ -22,9 +22,13 @@ app.use(helmet());
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://fin-sight-gray.vercel.app'
+  ],
   credentials: true
 };
+
 app.use(cors(corsOptions));
 
 // Body parser
